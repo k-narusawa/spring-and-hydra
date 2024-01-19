@@ -28,7 +28,15 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
+	implementation("org.springframework.security:spring-security-config:6.2.1")
+	implementation("org.flywaydb:flyway-core:9.22.3")
+	implementation("com.auth0:java-jwt:4.4.0")
+	implementation("sh.ory.hydra:hydra-client:2.1.1")
+
+	runtimeOnly("org.flywaydb:flyway-mysql:9.22.3")
+	runtimeOnly("mysql:mysql-connector-java:8.0.33")
 	runtimeOnly("com.h2database:h2")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 }
