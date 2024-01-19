@@ -48,7 +48,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_USER=docker
       - MYSQL_PASSWORD=docker
-    networks:g add
+    networks:
       - intranet
 
   hydra-mysql:
