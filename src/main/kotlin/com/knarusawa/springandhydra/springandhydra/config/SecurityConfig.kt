@@ -22,6 +22,10 @@ class SecurityConfig {
             it.requestMatchers("/login").permitAll()
             it.anyRequest().authenticated()
         }
+        http.formLogin {
+            it.loginPage("/login")
+            it.defaultSuccessUrl("/userinfo")
+        }
         return http.build()
     }
     @Bean

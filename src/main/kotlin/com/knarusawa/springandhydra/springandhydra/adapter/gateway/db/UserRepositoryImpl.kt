@@ -5,7 +5,9 @@ import com.knarusawa.springandhydra.springandhydra.adapter.gateway.db.record.Use
 import com.knarusawa.springandhydra.springandhydra.domain.user.User
 import com.knarusawa.springandhydra.springandhydra.domain.user.UserRepository
 import com.knarusawa.springandhydra.springandhydra.domain.user.Username
+import org.springframework.stereotype.Repository
 
+@Repository
 class UserRepositoryImpl(
         private val userDao: UserDao
 ): UserRepository {
