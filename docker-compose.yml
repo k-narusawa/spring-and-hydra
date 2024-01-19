@@ -12,7 +12,7 @@ services:
         source: ./docker/hydra
         target: /etc/config/hydra
     environment:
-      - DSN=mysql://root:root@tcp(mysql:3306)/mysql?max_conns=20&max_idle_conns=4
+      - DSN=mysql://root:root@tcp(hydra-mysql:3306)/mysql?max_conns=20&max_idle_conns=4
       # env_file:
       #   - ./docker/hydra.env
     restart: unless-stopped
@@ -24,7 +24,7 @@ services:
   hydra-migrate:
     image: oryd/hydra:v2.2.0-rc.3
     environment:
-      - DSN=mysql://root:root@tcp(mysql:3306)/mysql?max_conns=20&max_idle_conns=4
+      - DSN=mysql://root:root@tcp(hydra-mysql:3306)/mysql?max_conns=20&max_idle_conns=4
     command: migrate -c /etc/config/hydra/hydra.yml sql -e --yes
     volumes:
       - type: bind
@@ -48,9 +48,23 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_USER=docker
       - MYSQL_PASSWORD=docker
-    networks:
+    networks:g add
       - intranet
 
+  hydra-mysql:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    volumes:
+      - type: volume
+        source: hydra-mysql
+        target: /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=docker
+      - MYSQL_PASSWORD=docker
+    networks:
+      - intranet
 
 networks:
   intranet:
@@ -58,3 +72,4 @@ networks:
 volumes:
   hydra:
   mysql:
+  hydra-mysql:
