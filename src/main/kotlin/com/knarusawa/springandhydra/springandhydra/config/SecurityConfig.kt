@@ -29,6 +29,7 @@ class SecurityConfig {
         }
         http.authorizeHttpRequests {
             it.requestMatchers("/login").permitAll()
+            it.requestMatchers("/consent").permitAll()
             it.anyRequest().authenticated()
         }
         http.addFilterBefore(authenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter::class.java)

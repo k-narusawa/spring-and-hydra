@@ -1,5 +1,6 @@
 package com.knarusawa.springandhydra.springandhydra.adapter.middleware
 
+import com.knarusawa.springandhydra.springandhydra.util.logger
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.AuthenticationManager
@@ -17,6 +18,7 @@ class AuthenticationFilter(
         private val authenticationManager: AuthenticationManager
 ) : UsernamePasswordAuthenticationFilter() {
     private var customSecurityContextRepository: SecurityContextRepository? = null
+    private val log = logger()
 
     init {
         this.customSecurityContextRepository = DelegatingSecurityContextRepository(
@@ -28,6 +30,7 @@ class AuthenticationFilter(
     override fun attemptAuthentication(
             request: HttpServletRequest, response: HttpServletResponse?
     ): Authentication {
+        log.info("AuthenticationFilter Start")
         saveContext(request, response)
 
         val username = obtainUsername(request)

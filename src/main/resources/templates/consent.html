@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Consent</title>
+</head>
+<body>
+<form th:action="@{/consent}" method="POST" th:object="${consentRequestBody}">
+  <ul>
+    <li th:each="scope : ${consentRequestBody.scopes}" th:field="*{scopes}">
+      <p th:text=${scope}>
+    </li>
+  </ul>
+  <input type="hidden"
+         id="consent_challenge"
+         name="consent_challenge"
+         th:value="${param.consent_challenge}"
+         th:field="*{consentChallenge}">
+  <p><input type="submit" value="同意する"/></p>
+</form>
+</body>
+</html>
