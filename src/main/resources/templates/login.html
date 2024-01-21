@@ -24,6 +24,9 @@
     <p>
       <input type="password" id="password" name="password" class="form-control" placeholder="パスワード" required>
     </p>
+    <p>
+      <input type="hidden" id="login_challenge" name="login_challenge" class="form-control" th:value="${param.login_challenge}">
+    </p>
     <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
   </form>
 </div>

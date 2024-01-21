@@ -14,7 +14,6 @@ import java.security.Principal
 class UserInfoController {
     @GetMapping
     fun userinfoGet(
-            principal: Principal,
             authentication: Authentication,
             model: Model,
     ): String {

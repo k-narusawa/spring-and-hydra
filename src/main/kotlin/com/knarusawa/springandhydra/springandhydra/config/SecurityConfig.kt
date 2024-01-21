@@ -1,5 +1,6 @@
 package com.knarusawa.springandhydra.springandhydra.config
 
+import com.knarusawa.springandhydra.springandhydra.adapter.middleware.AuthenticationFilter
 import com.knarusawa.springandhydra.springandhydra.adapter.middleware.AuthenticationSuccessHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -16,7 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 class SecurityConfig {
     @Autowired
-    private lateinit var authenticationSuccessHandler: AuthenticationSuccessHandler
+    private lateinit var authenticationConfiguration: AuthenticationConfiguration
+
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.cors {
@@ -29,11 +31,18 @@ class SecurityConfig {
             it.requestMatchers("/login").permitAll()
             it.anyRequest().authenticated()
         }
-        http.formLogin {
-            it.loginPage("/login")
-            it.successHandler(authenticationSuccessHandler)
-        }
+        http.addFilterBefore(authenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter::class.java)
         return http.build()
+    }
+
+    private fun authenticationFilter(authenticationManager: AuthenticationManager): UsernamePasswordAuthenticationFilter {
+        val filter = AuthenticationFilter(authenticationManager)
+        filter.setRequiresAuthenticationRequestMatcher {
+            it.method == "POST" && it.requestURI == "/login"
+        }
+        filter.setAuthenticationManager(authenticationManager)
+        filter.setAuthenticationSuccessHandler(AuthenticationSuccessHandler())
+        return filter
     }
 
     @Bean
@@ -42,7 +51,7 @@ class SecurityConfig {
     }
 
     @Bean
-    fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager {
+    fun authenticationManager(): AuthenticationManager {
         return authenticationConfiguration.authenticationManager
     }
 }
