@@ -36,7 +36,7 @@ serve:
         - DELETE
       allowed_headers:
         - Authorization
-        - Cookie
+        - Cookiedo
         - Content-Type
         - X-Session-Token
       exposed_headers:
@@ -46,7 +46,7 @@ serve:
 
 urls:
   self:
-    issuer: http://127.0.0.1:4444
+    issuer: http://127.0.0.1:44444
   consent: http://127.0.0.1:8080/consent
   login: http://127.0.0.1:8080/login
   logout: http://127.0.0.1:8080/logout

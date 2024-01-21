@@ -3,7 +3,7 @@ services:
   hydra:
     image: oryd/hydra:v2.2.0-rc.3
     ports:
-      - "4444:4444" # Public port
+      - "44444:4444" # Public port
       - "4445:4445" # Admin port
       - "5556:5555" # Port for hydra token user
     command: serve -c /etc/config/hydra/hydra.yml all --dev
